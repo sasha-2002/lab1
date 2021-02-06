@@ -68,7 +68,7 @@ class Field{
             result += this.#arr[height_1[i]][width_1[i]];
             
         }
-        console.log(result);
+        
         if (result <= 1){
             return 0;
         }
@@ -92,7 +92,7 @@ class Field{
         //var arr2_temp = arrayClone(this.#arr);
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
-                arr2_temp[i][j] = define_point(i, j);
+                arr2_temp[i][j] = this.define_point(i, j);
             }
         }
         this.#arr = Object.assign([], arr2_temp);
