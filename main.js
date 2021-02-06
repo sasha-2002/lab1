@@ -74,8 +74,6 @@ class Field{
     }
     update_field(){
         var arr2_temp =  Object.assign([], this.#arr);
-        //var arr2_temp = this.#arr.slice();
-        //var arr2_temp = arrayClone(this.#arr);
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
                 arr2_temp[i][j] = this.define_point(i, j);
@@ -93,14 +91,14 @@ function sleep(milliseconds) {
       currentDate = Date.now();
     } while (currentDate - date < milliseconds);
   }
-var max_ = 6; // 1 - 50%, 2 - 33%, 3 - 25%, .......
-var a = new Field(25, 25, max_);
+var max_ = 7; // 1 - 50%, 2 - 33%, 3 - 25%, .......
+var a = new Field(40, 40, max_);
 a.print_arr();
 sleep(2000);
 while(true){
     a.update_field();
     a.print_arr();
-    sleep(200);
+    sleep(150);
     console.clear();
     
 }
