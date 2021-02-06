@@ -10,7 +10,9 @@ function getRandomIntInclusive(min, max) {
 class Field{
     #h;
     #w;
-    #arr;
+    #arr; // field
+    // 1 - alive
+    // other dead
     constructor(height, width, max_){
         this.#h = height;
         this.#w = width;
@@ -35,9 +37,9 @@ class Field{
             process.stdout.write('\n');
         }
     }
+    update_field(){
 
-
-
+    }
 }
 var max_ = 3; // 1 - 50%, 2 - 33%, 3 - 25%, .......
 var a = new Field(25, 25, max_);
