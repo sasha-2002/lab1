@@ -47,6 +47,9 @@ class Field{
     define_point(height, width){ 
         var result = 0;
         // по часові з -1 -1
+        // [-1][-1] [-1][0] [-1][+1]
+        //  [0][-1] [0][0]  [0][+1]
+        // [+1][-1] [+1][0] [+1][+1]
         var height_1 = [height-1, height-1, height-1, height, height+1,height+1,height+1,height];
         var width_1 = [ width-1,  width,    width+1,  width+1,width+1, width,   width-1, width-1];
 
