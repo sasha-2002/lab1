@@ -38,7 +38,17 @@ class Field{
         }
     }
     update_field(){
-
+        var arr2_temp = this.#arr;
+        for (var i=0;i<this.#h;i++){
+            for (var j=0;j<this.#w;j++){
+                arr2_temp[i][j] = define_point(i , j);
+            }
+        }
+    }
+    define_point(n, m){
+        var result;
+        
+        return result;
     }
 }
 var max_ = 3; // 1 - 50%, 2 - 33%, 3 - 25%, .......
