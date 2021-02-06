@@ -6,21 +6,7 @@ function getRandomIntInclusive(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
-/*function arrayClone (arr) {
-	var i, copy;
-	
-	if (Array.isArray(arr)) {
-		copy = arr.slice(0);
-		for (i = 0; i < copy.length; i++) {
-			copy[i] = arrayClone(copy[i]);
-		}
-		return copy;
-	} else if(typeof arr === 'object') {
-		throw 'Cannot clone array containing an object!';
-	} else {
-		return arr;
-	}
-}*/
+
 
 class Field{
     #h;
@@ -100,10 +86,23 @@ class Field{
     
     
 }
-var max_ = 3; // 1 - 50%, 2 - 33%, 3 - 25%, .......
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
+var max_ = 6; // 1 - 50%, 2 - 33%, 3 - 25%, .......
 var a = new Field(25, 25, max_);
 a.print_arr();
-a.update_field();
-a.print_arr();
+
+while(true){
+    a.update_field();
+    a.print_arr();
+    sleep(200);
+    console.clear();
+    
+}
 
 
