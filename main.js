@@ -55,13 +55,13 @@ class Field{
             
         }
         
-        if (result <= 1){
+        if (this.#arr[height][width] == 1 && result <= 1){
             return 0;
         }
-        else if (result == 3){
+        else if (this.#arr[height][width] == 0 && result == 3){
             return 1;
         }
-        else if (result >= 4){
+        else if (this.#arr[height][width] == 1 && result >= 4){
             return 0;
         }
         else if (this.#arr[height][width] == 1 && (result == 2 || result == 3)){
@@ -96,7 +96,7 @@ function sleep(milliseconds) {
 var max_ = 6; // 1 - 50%, 2 - 33%, 3 - 25%, .......
 var a = new Field(25, 25, max_);
 a.print_arr();
-
+sleep(2000);
 while(true){
     a.update_field();
     a.print_arr();
