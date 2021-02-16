@@ -102,7 +102,6 @@ function main(){
         a.print_arr();
         sleep(200);
         console.clear();
-        
     }
 }
 
