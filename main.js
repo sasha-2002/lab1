@@ -29,7 +29,7 @@ class Field{
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
                 if (this.#arr[i][j] == 1){ // alive
-                    process.stdout.write('  '.bgBlue);
+                    process.stdout.write('  '.bgRed);
                 }
                 else{ // dead
                     process.stdout.write('  ');
@@ -83,9 +83,7 @@ class Field{
             }
         }
         this.#arr = Object.assign([], arr2_temp);
-    }
-    
-    
+    }   
 }
 function sleep(milliseconds) {
     const date = Date.now();
@@ -94,8 +92,8 @@ function sleep(milliseconds) {
       currentDate = Date.now();
     } while (currentDate - date < milliseconds);
   }
-var max_ = 7; // 1 - 50%, 2 - 33%, 3 - 25%, .......
-var a = new Field(40, 40, max_);
+var max_ = 3; // 1 - 50%, 2 - 33%, 3 - 25%, .......
+var a = new Field(25, 25, max_);
 a.print_arr();
 sleep(2000);
 while(true){
@@ -105,5 +103,3 @@ while(true){
     console.clear();
     
 }
-
-
