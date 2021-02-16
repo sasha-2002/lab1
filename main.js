@@ -1,12 +1,10 @@
 var colors = require('colors'); // https://www.npmjs.com/package/colors
 
-
-function getRandomIntInclusive(min, max) {
+function get_random_number(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
-
 
 class Field{
     #h;
@@ -21,7 +19,7 @@ class Field{
         for (var i=0;i<height;i++){
             this.#arr[i] = new Array(width);
             for (var j=0;j<width;j++){
-                this.#arr[i][j] = getRandomIntInclusive(0, max_) == 1? 1 : 0;
+                this.#arr[i][j] = get_random_number(0, max_) == 1? 1 : 0;
             }
         }
     }
@@ -29,7 +27,7 @@ class Field{
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
                 if (this.#arr[i][j] == 1){ // alive
-                    process.stdout.write('  '.bgRed);
+                    process.stdout.write('  '.bgGreen);
                 }
                 else{ // dead
                     process.stdout.write('  ');
@@ -87,19 +85,25 @@ class Field{
 }
 function sleep(milliseconds) {
     const date = Date.now();
-    let currentDate = null;
+    let current_date = null;
     do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-  }
-var max_ = 3; // 1 - 50%, 2 - 33%, 3 - 25%, .......
-var a = new Field(25, 25, max_);
-a.print_arr();
-sleep(2000);
-while(true){
-    a.update_field();
-    a.print_arr();
-    sleep(150);
-    console.clear();
-    
+      current_date = Date.now();
+    } while (current_date - date < milliseconds);
 }
+
+function main(){
+    var max_ = 3; // 1 - 50%, 2 - 33%, 3 - 25%, .......
+    var a = new Field(25, 25, max_);
+    
+    a.print_arr();
+    sleep(2000);
+    while(true){
+        a.update_field();
+        a.print_arr();
+        sleep(200);
+        console.clear();
+        
+    }
+}
+
+main();
