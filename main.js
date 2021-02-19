@@ -1,5 +1,5 @@
 var colors = require('colors'); // https://www.npmjs.com/package/colors
-
+var blessed = require('blessed'); // https://www.npmjs.com/package/blessed
 function get_random_number(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -36,13 +36,13 @@ class Field{
             process.stdout.write('\n');
         }
     }
-    check(n, m){
+    #check(n, m){
         if (n >= 0 && n < this.#h && m >= 0 && m < this.#w){
             return true;
         }
         return false;
     }
-    define_point(height, width){ 
+    #define_point(height, width){ 
         var result = 0;
         // по часові з -1 -1
         // [-1][-1] [-1][0] [-1][+1]
@@ -51,7 +51,7 @@ class Field{
         var height_1 = [height-1, height-1, height-1, height, height+1,height+1,height+1,height];
         var width_1 = [ width-1,  width,    width+1,  width+1,width+1, width,   width-1, width-1];
 
-        for(var i=0; i < 8 && this.check(height_1[i], width_1[i]); i++){
+        for(var i=0; i < 8 && this.#check(height_1[i], width_1[i]); i++){
             result += this.#arr[height_1[i]][width_1[i]];
             
         }
@@ -77,7 +77,7 @@ class Field{
         var arr2_temp =  Object.assign([], this.#arr);
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
-                arr2_temp[i][j] = this.define_point(i, j);
+                arr2_temp[i][j] = this.#define_point(i, j);
             }
         }
         this.#arr = Object.assign([], arr2_temp);
@@ -105,4 +105,53 @@ function main(){
     }
 }
 
-main();
+//main();
+
+
+var screen = blessed.screen({
+    smartCSR: true
+});
+
+screen.title = 'game';
+
+var box = blessed.box({
+    top: 'center',
+    left: 'center',
+    width: '110%',
+    height: '110%',
+    tags: true,
+    style: {
+        bg: 'green'
+    }
+});
+
+var box2 = blessed.box({
+    top: 'center',
+    left: 'left',
+    width: '70%',
+    height: '95%',
+    tags: true,
+    style: {
+        bg: 'black'
+    }
+});
+
+screen.append(box);
+screen.append(box2);
+
+
+
+screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+    return process.exit(0);
+});
+
+screen.key(['z'], function() {
+    box2.setContent('w = ' + box2.width + ' h = ' + box2.height);
+    screen.render();
+  });
+
+//screen.resize
+box2.focus();
+
+// Render the screen.
+screen.render();
