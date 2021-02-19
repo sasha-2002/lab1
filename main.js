@@ -10,7 +10,7 @@ function get_random_number(min, max) {
 class Field{
     #h;
     #w;
-    #m;
+    #m;// 1 - 50%, 2 - 33%, 3 - 25%, .......
     #arr; // field
     // 1 - alive
     // 0 - dead
@@ -24,6 +24,10 @@ class Field{
         }
         this.mix();
     }
+    clear(){
+        main_field_box.setContent('');
+        screen.render();
+    }
     mix(){
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
@@ -32,8 +36,7 @@ class Field{
         }
     }
     print_arr(){
-        main_field_box.setContent('');
-        screen.render();
+        this.clear();
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
                 if (this.#arr[i][j] == 1){ // alive
@@ -110,7 +113,6 @@ function sleep(milliseconds) {
     } while (current_date - date < milliseconds);
 }
 
-
 var screen = blessed.screen({
     smartCSR: true
 });
@@ -127,7 +129,6 @@ var bg_box = blessed.box({
         bg: 'blue'
     }
 });
-
 var main_field_box = blessed.box({
     top: 'center',
     left: 'left',
@@ -148,7 +149,7 @@ var form_1 = blessed.form({
     height: '95%',
     tags: true,
     style: {
-        bg: 'green'
+        bg: 'magenta'
     }
 });
 
@@ -161,24 +162,6 @@ var input_1 = blessed.textarea({
     colors: 'black',
     inputOnFocus: true,
     content: '3',
-    tags: true,
-    style: {
-        bg: 'white',
-        fg: 'black',
-        focus: {
-            bg: 'blue'
-          }   
-    }
-});
-var input_2 = blessed.textarea({
-    parent: form_1,
-    top: '20%',
-    left: '5%',
-    width: '50%',
-    height: '10%',
-    colors: 'black',
-    inputOnFocus: true,
-    content: '200',
     tags: true,
     style: {
         bg: 'white',
@@ -216,7 +199,7 @@ var button_2 = blessed.button({
     height: '10%',
     inputOnFocus: true,
     tags: true,
-    content: 'HAND',
+    content: 'Delete',
     style: {
         bg: '#FFF830',
         fg: 'black',
@@ -274,17 +257,6 @@ var button_5 = blessed.button({
     }
 });
 
-var line_1 = blessed.line({
-    parent: form_1,
-    orientation: 'vertical',
-    width: '5%',
-    height: '100%',
-    bg: 'black',
-    left: '0%',
-    top: '0%',
-
-});
-
 var label_1 = blessed.text({
     parent: form_1,
     top: '0%',
@@ -305,25 +277,6 @@ var label_1 = blessed.text({
 });
 var label_2 = blessed.text({
     parent: form_1,
-    top: '17%',
-    left: '5%',
-    width: '30%',
-    height: '5%',
-    colors: 'black',
-    inputOnFocus: true,
-    content: 'time',
-    tags: true,
-    style: {
-        bg: '#48FFF3',
-        fg: 'black',
-        focus: {
-            bg: 'blue'
-          }   
-    }
-});
-
-var label_3 = blessed.text({
-    parent: form_1,
     top: '95%',
     left: '5%',
     width: '30%',
@@ -340,7 +293,7 @@ var label_3 = blessed.text({
           }   
     }
 });
-var label_4 = blessed.text({
+var label_3 = blessed.text({
     parent: form_1,
     top: '95%',
     left: '40%',
@@ -364,12 +317,25 @@ screen.key(['escape', 'q', 'C-c'], function(ch, key) {
 });
 
 
-button_1.on('press', function() {
-    a.print_arr();
+button_1.on('press', function() {//fill
+    A = new Field(  parseInt(main_field_box.height), 
+                    parseInt(main_field_box.width/2), 
+                    input_1.value != ''? parseInt(input_1.value): 3
+                    );
+    A.print_arr();
 });
-button_4.on('press', function() {
-    a.update_field();
-    a.print_arr();
+button_2.on('press', function() {//delete
+    A = new Field(0,0,0);
+    A.clear();
+});
+button_3.on('press', function() {//stop
+    
+});
+button_4.on('press', function() {//step
+    A.update_field();
+    A.print_arr();
+});
+button_5.on('press', function() {//start
     
 });
 
@@ -378,26 +344,21 @@ screen.append(bg_box);
 screen.append(main_field_box);
 screen.append(form_1);
 form_1.append(input_1);
-form_1.append(input_2);
+
 form_1.append(button_1);
 form_1.append(button_2);
 form_1.append(button_3);
 form_1.append(button_4);
 form_1.append(button_5);
+
 form_1.append(label_1);
 form_1.append(label_2);
 form_1.append(label_3);
-form_1.append(label_4);
-form_1.append(line_1);
 
 
-
-
-var max_ = input_1.value != ''? parseInt(input_1.value): 3; // 1 - 50%, 2 - 33%, 3 - 25%, .......
-var a = new Field(parseInt(main_field_box.height), parseInt(main_field_box.width/2), max_);
     
-
-
+var A = new Field(0,0,0);
+var work = false;
 
 
 
