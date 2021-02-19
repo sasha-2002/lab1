@@ -156,10 +156,31 @@ var input_1 = blessed.textarea({
     height: '10%',
     colors: 'black',
     inputOnFocus: true,
+    content: '3',
     tags: true,
     style: {
         bg: 'black',
-        fg: 'white'
+        fg: 'white',
+        focus: {
+            bg: 'blue'
+          }   
+    }
+});
+var input_2 = blessed.textarea({
+    top: '20%',
+    left: '5%',
+    width: '50%',
+    height: '10%',
+    colors: 'black',
+    inputOnFocus: true,
+    content: '200',
+    tags: true,
+    style: {
+        bg: 'black',
+        fg: 'white',
+        focus: {
+            bg: 'blue'
+          }   
     }
 });
 
@@ -174,10 +195,13 @@ var button_1 = blessed.button({
     height: '10%',
     name: 'cancel',
     tags: true,
-    content: 'Random',
+    content: 'Fill',
     style: {
         bg: 'white',
-        fg: 'black'               
+        fg: 'black',
+        focus: {
+            bg: 'blue'
+          }           
     }    
 });
 var button_2 = blessed.button({
@@ -187,13 +211,63 @@ var button_2 = blessed.button({
     height: '10%',
     inputOnFocus: true,
     tags: true,
-    content: 'Random',
+    content: 'HAND',
     style: {
         bg: 'white',
-        fg: 'black'               
+        fg: 'black',
+        focus: {
+            bg: 'blue'
+          },               
     }
 });
-
+var button_3 = blessed.button({
+    top: '35%',
+    left: '70%',
+    width: '20%',
+    height: '10%',
+    inputOnFocus: true,
+    tags: true,
+    content: 'Stop',
+    style: {
+        bg: 'white',
+        fg: 'black',
+        focus: {
+            bg: 'blue'
+          },               
+    }
+});
+var button_4 = blessed.button({
+    top: '50%',
+    left: '70%',
+    width: '20%',
+    height: '10%',
+    inputOnFocus: true,
+    tags: true,
+    content: 'Step',
+    style: {
+        bg: 'white',
+        fg: 'black',
+        focus: {
+            bg: 'blue'
+          },               
+    }
+});
+var button_5 = blessed.button({
+    top: '65%',
+    left: '70%',
+    width: '20%',
+    height: '10%',
+    inputOnFocus: true,
+    tags: true,
+    content: 'Start',
+    style: {
+        bg: 'white',
+        fg: 'black',
+        focus: {
+            bg: 'blue'
+          },               
+    }
+});
 
 screen.key(['escape', 'q', 'C-c'], function(ch, key) {
     return process.exit(0);
@@ -204,15 +278,23 @@ button_1.on('press', function() {
     return process.exit(0);
     
   });
+  button_2.on('press', function() {
+    return process.exit(0);
+    
+  });
 
 screen.append(bg_box);
 screen.append(main_field_box);
 screen.append(form_1);
 form_1.append(input_1);
+form_1.append(input_2);
 form_1.append(button_1);
 form_1.append(button_2);
+form_1.append(button_3);
+form_1.append(button_4);
+form_1.append(button_5);
 
 
 
-main_field_box.focus();
+//button_1.focus();
 screen.render();
