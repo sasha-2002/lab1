@@ -1,5 +1,7 @@
 var colors = require('colors'); // https://www.npmjs.com/package/colors
 var blessed = require('blessed'); // https://www.npmjs.com/package/blessed
+//var s = require(__dirname + '/elements.js');
+
 function get_random_number(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -134,9 +136,9 @@ var main_field_box = blessed.box({
     }
 });
 
-
-
 var form_1 = blessed.form({
+    parent: screen,
+    keys: true, 
     top: '5%',
     left: '70%',
     width: '30%',
@@ -147,20 +149,70 @@ var form_1 = blessed.form({
     }
 });
 
+var input_1 = blessed.textarea({
+    top: '5%',
+    left: '5%',
+    width: '50%',
+    height: '10%',
+    colors: 'black',
+    inputOnFocus: true,
+    tags: true,
+    style: {
+        bg: 'black',
+        fg: 'white'
+    }
+});
+
+var button_1 = blessed.button({
+    parent: form_1,
+    mouse: true,
+    keys: true,
+    shrink: true,
+    top: '5%',
+    left: '70%',
+    width: '20%',
+    height: '10%',
+    name: 'cancel',
+    tags: true,
+    content: 'Random',
+    style: {
+        bg: 'white',
+        fg: 'black'               
+    }    
+});
+var button_2 = blessed.button({
+    top: '20%',
+    left: '70%',
+    width: '20%',
+    height: '10%',
+    inputOnFocus: true,
+    tags: true,
+    content: 'Random',
+    style: {
+        bg: 'white',
+        fg: 'black'               
+    }
+});
+
+
 screen.key(['escape', 'q', 'C-c'], function(ch, key) {
     return process.exit(0);
 });
 
-screen.key(['z'], function() {
-    main_field_box.setContent('w = ' + main_field_box.width + ' h = ' + main_field_box.height);
-    screen.render();
+
+button_1.on('press', function() {
+    return process.exit(0);
+    
   });
 
 screen.append(bg_box);
 screen.append(main_field_box);
 screen.append(form_1);
-//screen.resize
-form_1.focus();
+form_1.append(input_1);
+form_1.append(button_1);
+form_1.append(button_2);
 
-// Render the screen.
+
+
+main_field_box.focus();
 screen.render();
