@@ -121,7 +121,7 @@ var bg_box = blessed.box({
     height: '120%',
     tags: true,
     style: {
-        bg: 'green'
+        bg: 'blue'
     }
 });
 
@@ -145,11 +145,12 @@ var form_1 = blessed.form({
     height: '95%',
     tags: true,
     style: {
-        bg: 'red'
+        bg: 'green'
     }
 });
 
 var input_1 = blessed.textarea({
+    parent: form_1,
     top: '5%',
     left: '5%',
     width: '50%',
@@ -159,14 +160,15 @@ var input_1 = blessed.textarea({
     content: '3',
     tags: true,
     style: {
-        bg: 'black',
-        fg: 'white',
+        bg: 'white',
+        fg: 'black',
         focus: {
             bg: 'blue'
           }   
     }
 });
 var input_2 = blessed.textarea({
+    parent: form_1,
     top: '20%',
     left: '5%',
     width: '50%',
@@ -176,8 +178,8 @@ var input_2 = blessed.textarea({
     content: '200',
     tags: true,
     style: {
-        bg: 'black',
-        fg: 'white',
+        bg: 'white',
+        fg: 'black',
         focus: {
             bg: 'blue'
           }   
@@ -197,7 +199,7 @@ var button_1 = blessed.button({
     tags: true,
     content: 'Fill',
     style: {
-        bg: 'white',
+        bg: '#FFF830',
         fg: 'black',
         focus: {
             bg: 'blue'
@@ -213,7 +215,7 @@ var button_2 = blessed.button({
     tags: true,
     content: 'HAND',
     style: {
-        bg: 'white',
+        bg: '#FFF830',
         fg: 'black',
         focus: {
             bg: 'blue'
@@ -229,7 +231,7 @@ var button_3 = blessed.button({
     tags: true,
     content: 'Stop',
     style: {
-        bg: 'white',
+        bg: '#FFF830',
         fg: 'black',
         focus: {
             bg: 'blue'
@@ -245,7 +247,7 @@ var button_4 = blessed.button({
     tags: true,
     content: 'Step',
     style: {
-        bg: 'white',
+        bg: '#FFF830',
         fg: 'black',
         focus: {
             bg: 'blue'
@@ -261,11 +263,87 @@ var button_5 = blessed.button({
     tags: true,
     content: 'Start',
     style: {
-        bg: 'white',
+        bg: '#FFF830',
         fg: 'black',
         focus: {
             bg: 'blue'
           },               
+    }
+});
+
+
+
+var label_1 = blessed.text({
+    parent: form_1,
+    top: '0%',
+    left: '5%',
+    width: '30%',
+    height: '5%',
+    colors: 'black',
+    inputOnFocus: true,
+    content: 'random',
+    tags: true,
+    style: {
+        bg: '#48FFF3',
+        fg: 'black',
+        focus: {
+            bg: 'blue'
+          }   
+    }
+});
+var label_2 = blessed.text({
+    parent: form_1,
+    top: '17%',
+    left: '5%',
+    width: '30%',
+    height: '5%',
+    colors: 'black',
+    inputOnFocus: true,
+    content: 'time',
+    tags: true,
+    style: {
+        bg: '#48FFF3',
+        fg: 'black',
+        focus: {
+            bg: 'blue'
+          }   
+    }
+});
+
+var label_3 = blessed.text({
+    parent: form_1,
+    top: '95%',
+    left: '5%',
+    width: '30%',
+    height: '10%',
+    colors: 'black',
+    inputOnFocus: true,
+    content: 'status',
+    tags: true,
+    style: {
+        bg: 'white',
+        fg: 'black',
+        focus: {
+            bg: 'blue'
+          }   
+    }
+});
+var label_4 = blessed.text({
+    parent: form_1,
+    top: '95%',
+    left: '40%',
+    width: '60%',
+    height: '10%',
+    colors: 'black',
+    inputOnFocus: true,
+    content: 'Виконав Загаєцький О. А. 3кн-19б',
+    tags: true,
+    style: {
+        bg: 'white',
+        fg: 'black',
+        focus: {
+            bg: 'blue'
+          }   
     }
 });
 
@@ -293,6 +371,10 @@ form_1.append(button_2);
 form_1.append(button_3);
 form_1.append(button_4);
 form_1.append(button_5);
+form_1.append(label_1);
+form_1.append(label_2);
+form_1.append(label_3);
+form_1.append(label_4);
 
 
 
