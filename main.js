@@ -1,6 +1,6 @@
 var colors = require('colors'); // https://www.npmjs.com/package/colors
 var blessed = require('blessed'); // https://www.npmjs.com/package/blessed
-//var s = require(__dirname + '/elements.js');
+
 
 function get_random_number(min, max) {
     min = Math.ceil(min);
@@ -91,21 +91,6 @@ function sleep(milliseconds) {
       current_date = Date.now();
     } while (current_date - date < milliseconds);
 }
-function main(){
-    var max_ = 3; // 1 - 50%, 2 - 33%, 3 - 25%, .......
-    var a = new Field(25, 25, max_);
-    
-    a.print_arr();
-    sleep(2000);
-    while(true){
-        a.update_field();
-        a.print_arr();
-        sleep(200);
-        console.clear();
-    }
-}
-
-//main();
 
 
 var screen = blessed.screen({
@@ -353,13 +338,10 @@ screen.key(['escape', 'q', 'C-c'], function(ch, key) {
 
 
 button_1.on('press', function() {
-    return process.exit(0);
+    //TODO
     
-  });
-  button_2.on('press', function() {
-    return process.exit(0);
-    
-  });
+});
+
 
 screen.append(bg_box);
 screen.append(main_field_box);
@@ -378,5 +360,16 @@ form_1.append(label_4);
 
 
 
-//button_1.focus();
+
+var max_ = input_1.value != ''? parseInt(input_1.value): 3; // 1 - 50%, 2 - 33%, 3 - 25%, .......
+var a = new Field(parseInt(main_field_box), parseInt(main_field_box/2), max_);
+    
+
+
+
+
+
+
+
+
 screen.render();
