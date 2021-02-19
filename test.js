@@ -11,3 +11,15 @@ function main(){
         console.clear();
     }
 }
+
+constructor(height, width, max_){
+    this.#h = height;
+    this.#w = width;
+    this.#arr = new Array(height);
+    for (var i=0;i<height;i++){
+        this.#arr[i] = new Array(width);
+        for (var j=0;j<width;j++){
+            this.#arr[i][j] = get_random_number(0, max_) == 1? 1 : 0;
+        }
+    }
+}

@@ -10,32 +10,50 @@ function get_random_number(min, max) {
 class Field{
     #h;
     #w;
+    #m;
     #arr; // field
     // 1 - alive
     // 0 - dead
     constructor(height, width, max_){
         this.#h = height;
         this.#w = width;
+        this.#m = max_;
         this.#arr = new Array(height);
         for (var i=0;i<height;i++){
-            this.#arr[i] = new Array(width);
-            for (var j=0;j<width;j++){
-                this.#arr[i][j] = get_random_number(0, max_) == 1? 1 : 0;
+            this.#arr[i] = new Array(width);  
+        }
+        this.mix();
+    }
+    mix(){
+        for (var i=0;i<this.#h;i++){
+            for (var j=0;j<this.#w;j++){
+                this.#arr[i][j] = get_random_number(0, this.#m) == 1? 1 : 0;
             }
         }
     }
     print_arr(){
+        main_field_box.setContent('');
+        screen.render();
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
                 if (this.#arr[i][j] == 1){ // alive
-                    process.stdout.write('  '.bgGreen);
+                    //process.stdout.write('  '.bgGreen);
+                    main_field_box.setContent(main_field_box.content + '  '.bgGreen);
+                    //main_field_box.write('  '.bgGreen);
+                    
                 }
                 else{ // dead
-                    process.stdout.write('  ');
+                    //process.stdout.write('  ');
+                    main_field_box.setContent(main_field_box.content + '  ');
+                    //main_field_box.write('  ');
                 }
             }
-            process.stdout.write('\n');
+            main_field_box.setContent(main_field_box.content + '\n');
+            //main_field_box.write('\n');
+            //process.stdout.write('\n');
         }
+        //main_field_box.setContent(main_field_box.content + '  sdfergavd sdb esrtewr gsgs '.bgGreen);
+        screen.render();
     }
     #check(n, m){
         if (n >= 0 && n < this.#h && m >= 0 && m < this.#w){
@@ -256,7 +274,16 @@ var button_5 = blessed.button({
     }
 });
 
+var line_1 = blessed.line({
+    parent: form_1,
+    orientation: 'vertical',
+    width: '5%',
+    height: '100%',
+    bg: 'black',
+    left: '0%',
+    top: '0%',
 
+});
 
 var label_1 = blessed.text({
     parent: form_1,
@@ -338,7 +365,11 @@ screen.key(['escape', 'q', 'C-c'], function(ch, key) {
 
 
 button_1.on('press', function() {
-    //TODO
+    a.print_arr();
+});
+button_4.on('press', function() {
+    a.update_field();
+    a.print_arr();
     
 });
 
@@ -357,12 +388,13 @@ form_1.append(label_1);
 form_1.append(label_2);
 form_1.append(label_3);
 form_1.append(label_4);
+form_1.append(line_1);
 
 
 
 
 var max_ = input_1.value != ''? parseInt(input_1.value): 3; // 1 - 50%, 2 - 33%, 3 - 25%, .......
-var a = new Field(parseInt(main_field_box), parseInt(main_field_box/2), max_);
+var a = new Field(parseInt(main_field_box.height), parseInt(main_field_box.width/2), max_);
     
 
 
