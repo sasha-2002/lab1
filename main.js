@@ -5,7 +5,6 @@ function get_random_number(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
-
 class Field{
     #h;
     #w;
@@ -90,7 +89,6 @@ function sleep(milliseconds) {
       current_date = Date.now();
     } while (current_date - date < milliseconds);
 }
-
 function main(){
     var max_ = 3; // 1 - 50%, 2 - 33%, 3 - 25%, .......
     var a = new Field(25, 25, max_);
@@ -114,18 +112,18 @@ var screen = blessed.screen({
 
 screen.title = 'game';
 
-var box = blessed.box({
+var bg_box = blessed.box({
     top: 'center',
     left: 'center',
-    width: '110%',
-    height: '110%',
+    width: '120%',
+    height: '120%',
     tags: true,
     style: {
         bg: 'green'
     }
 });
 
-var box2 = blessed.box({
+var main_field_box = blessed.box({
     top: 'center',
     left: 'left',
     width: '70%',
@@ -136,22 +134,33 @@ var box2 = blessed.box({
     }
 });
 
-screen.append(box);
-screen.append(box2);
 
 
+var form_1 = blessed.form({
+    top: '5%',
+    left: '70%',
+    width: '30%',
+    height: '95%',
+    tags: true,
+    style: {
+        bg: 'red'
+    }
+});
 
 screen.key(['escape', 'q', 'C-c'], function(ch, key) {
     return process.exit(0);
 });
 
 screen.key(['z'], function() {
-    box2.setContent('w = ' + box2.width + ' h = ' + box2.height);
+    main_field_box.setContent('w = ' + main_field_box.width + ' h = ' + main_field_box.height);
     screen.render();
   });
 
+screen.append(bg_box);
+screen.append(main_field_box);
+screen.append(form_1);
 //screen.resize
-box2.focus();
+form_1.focus();
 
 // Render the screen.
 screen.render();
