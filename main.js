@@ -333,7 +333,7 @@ button_5.on('press',function() {//start
     id = setInterval(() => {
         loop();
 
-    }, 200);
+    }, 100);
     label_2.content = 'working...';
 });
 
