@@ -1,12 +1,6 @@
 var colors = require('colors'); // https://www.npmjs.com/package/colors
 var blessed = require('blessed'); // https://www.npmjs.com/package/blessed
-function sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-  }
+
 
 function get_random_number(min, max) {
     min = Math.ceil(min);
