@@ -39,24 +39,17 @@ class Field{
         this.clear();
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
-                if (this.#arr[i][j] == 1){ // alive
-                    //process.stdout.write('  '.bgGreen);
+                if (this.#arr[i][j] == 1){ // alive                    
                     main_field_box.setContent(main_field_box.content + '  '.bgGreen);
-                    //main_field_box.write('  '.bgGreen);
-                    
                 }
                 else{ // dead
-                    //process.stdout.write('  ');
                     main_field_box.setContent(main_field_box.content + '  ');
-                    //main_field_box.write('  ');
                 }
             }
             main_field_box.setContent(main_field_box.content + '\n');
-            //main_field_box.write('\n');
-            //process.stdout.write('\n');
         }
-        //main_field_box.setContent(main_field_box.content + '  sdfergavd sdb esrtewr gsgs '.bgGreen);
         screen.render();
+        
     }
     #check(n, m){
         if (n >= 0 && n < this.#h && m >= 0 && m < this.#w){
@@ -329,16 +322,27 @@ button_2.on('press', function() {//delete
     A.clear();
 });
 button_3.on('press', function() {//stop
-    
+    clearInterval(id);
+    label_2.content = 'status';
 });
 button_4.on('press', function() {//step
     A.update_field();
     A.print_arr();
 });
-button_5.on('press', function() {//start
-    
+button_5.on('press',function() {//start
+    id = setInterval(() => {
+        loop();
+
+    }, 200);
+    label_2.content = 'working...';
 });
 
+function loop(){
+    A.update_field();
+    A.print_arr();
+}
+
+var id;
 
 screen.append(bg_box);
 screen.append(main_field_box);
