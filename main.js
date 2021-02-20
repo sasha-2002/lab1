@@ -1,6 +1,12 @@
 var colors = require('colors'); // https://www.npmjs.com/package/colors
 var blessed = require('blessed'); // https://www.npmjs.com/package/blessed
-
+function sleep(milliseconds) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
 
 function get_random_number(min, max) {
     min = Math.ceil(min);
@@ -10,7 +16,7 @@ function get_random_number(min, max) {
 class Field{
     #h;
     #w;
-    #m;// 1 - 50%, 2 - 33%, 3 - 25%, .......
+    #m;// 1 - 50%, 2 - 33%, 3 - 25%, ....... random
     #arr_current; // field
     #arr_old;
     // 1 - alive
@@ -20,8 +26,10 @@ class Field{
         this.#w = width;
         this.#m = max_;
         this.#arr_current = new Array(height);
+        this.#arr_old = new Array(height);
         for (var i=0;i<height;i++){
             this.#arr_current[i] = new Array(width);  
+            this.#arr_old[i] = new Array(width);  
         }
         this.mix();
     }
@@ -61,7 +69,6 @@ class Field{
             main_field_box.setContent(main_field_box.content + '\n');
         }
         screen.render();
-        
     }
     #check(n, m){
         if (n >= 0 && n < this.#h && m >= 0 && m < this.#w){
@@ -100,9 +107,20 @@ class Field{
         }
         
     }
+    #save(){
+        for (var i=0;i<this.#h;i++){ 
+            for(var j=0;j<this.#w;j++){
+                this.#arr_old[i][j] = this.#arr_current[i][j];
+            } 
+        }
+        //this.#arr_old = Object.assign([], this.#arr_current); what???
+    }
     update_field(){
+        if(check_box_1.checked){
+            this.#save();
+        }
+        
         var arr_temp =  Object.assign([], this.#arr_current);
-        this.#arr_old = Object.assign([], this.#arr_current);
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
                 arr_temp[i][j] = this.#define_point(i, j);
@@ -110,7 +128,6 @@ class Field{
         }
         this.#arr_current = Object.assign([], arr_temp);
     }   
-    
 }
 
 
@@ -118,7 +135,7 @@ var screen = blessed.screen({
     smartCSR: true
 });
 
-screen.title = 'game';
+
 
 var bg_box = blessed.box({
     top: 'center',
@@ -258,6 +275,23 @@ var button_5 = blessed.button({
     }
 });
 
+var check_box_1 = blessed.checkbox({
+    top: '20%',
+    left: '5%',
+    width: '25%',
+    height: '5%',
+    inputOnFocus: true,
+    tags: true,
+    content: 'OLD',
+    style: {
+        bg: 'green',
+        fg: 'black',
+        focus: {
+            bg: 'blue'
+          },               
+    }
+});
+
 var label_1 = blessed.text({
     parent: form_1,
     top: '0%',
@@ -278,7 +312,7 @@ var label_1 = blessed.text({
 });
 var label_2 = blessed.text({
     parent: form_1,
-    top: '95%',
+    top: '90%',
     left: '5%',
     width: '30%',
     height: '10%',
@@ -296,7 +330,7 @@ var label_2 = blessed.text({
 });
 var label_3 = blessed.text({
     parent: form_1,
-    top: '95%',
+    top: '90%',
     left: '40%',
     width: '60%',
     height: '10%',
@@ -345,27 +379,28 @@ button_5.on('press',function() {//start
     label_2.content = 'working...';
 });
 
-var id;
+
 
 screen.append(bg_box);
 screen.append(main_field_box);
 screen.append(form_1);
 form_1.append(input_1);
-
+form_1.append(check_box_1);
 form_1.append(button_1);
 form_1.append(button_2);
 form_1.append(button_3);
 form_1.append(button_4);
 form_1.append(button_5);
 
+
 form_1.append(label_1);
 form_1.append(label_2);
 form_1.append(label_3);
 
 
-    
+screen.title = 'game';
 var A = new Field(0,0,0);
-
+var id;
 
 
 
