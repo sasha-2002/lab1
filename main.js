@@ -11,16 +11,17 @@ class Field{
     #h;
     #w;
     #m;// 1 - 50%, 2 - 33%, 3 - 25%, .......
-    #arr; // field
+    #arr_current; // field
+    #arr_old;
     // 1 - alive
     // 0 - dead
     constructor(height, width, max_){
         this.#h = height;
         this.#w = width;
         this.#m = max_;
-        this.#arr = new Array(height);
+        this.#arr_current = new Array(height);
         for (var i=0;i<height;i++){
-            this.#arr[i] = new Array(width);  
+            this.#arr_current[i] = new Array(width);  
         }
         this.mix();
     }
@@ -31,7 +32,7 @@ class Field{
     mix(){
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
-                this.#arr[i][j] = get_random_number(0, this.#m) == 1? 1 : 0;
+                this.#arr_current[i][j] = get_random_number(0, this.#m) == 1? 1 : 0;
             }
         }
     }
@@ -39,11 +40,22 @@ class Field{
         this.clear();
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
-                if (this.#arr[i][j] == 1){ // alive                    
+                if (this.#arr_current[i][j] == 1){ // alive                    
                     main_field_box.setContent(main_field_box.content + '  '.bgGreen);
-                }
-                else{ // dead
-                    main_field_box.setContent(main_field_box.content + '  ');
+                }               
+                else{
+                    if(typeof this.#arr_old != 'undefined'){
+                        if(this.#arr_old[i][j] == 1){
+                            main_field_box.setContent(main_field_box.content + '  '.bgWhite);
+                        }
+                        else{
+                            main_field_box.setContent(main_field_box.content + '  ');
+                        }
+                    }
+                    else{
+                        main_field_box.setContent(main_field_box.content + '  ');
+                    }
+                    
                 }
             }
             main_field_box.setContent(main_field_box.content + '\n');
@@ -67,20 +79,20 @@ class Field{
         var width_1 = [ width-1,  width,    width+1,  width+1,width+1, width,   width-1, width-1];
 
         for(var i=0; i < 8 && this.#check(height_1[i], width_1[i]); i++){
-            result += this.#arr[height_1[i]][width_1[i]];
+            result += this.#arr_current[height_1[i]][width_1[i]];
             
         }
         
-        if (this.#arr[height][width] == 1 && result <= 1){
+        if (this.#arr_current[height][width] == 1 && result <= 1){
             return 0;
         }
-        else if (this.#arr[height][width] == 0 && result == 3){
+        else if (this.#arr_current[height][width] == 0 && result == 3){
             return 1;
         }
-        else if (this.#arr[height][width] == 1 && result >= 4){
+        else if (this.#arr_current[height][width] == 1 && result >= 4){
             return 0;
         }
-        else if (this.#arr[height][width] == 1 && (result == 2 || result == 3)){
+        else if (this.#arr_current[height][width] == 1 && (result == 2 || result == 3)){
             return 1;
         }
         else{
@@ -89,22 +101,18 @@ class Field{
         
     }
     update_field(){
-        var arr2_temp =  Object.assign([], this.#arr);
+        var arr_temp =  Object.assign([], this.#arr_current);
+        this.#arr_old = Object.assign([], this.#arr_current);
         for (var i=0;i<this.#h;i++){
             for (var j=0;j<this.#w;j++){
-                arr2_temp[i][j] = this.#define_point(i, j);
+                arr_temp[i][j] = this.#define_point(i, j);
             }
         }
-        this.#arr = Object.assign([], arr2_temp);
+        this.#arr_current = Object.assign([], arr_temp);
     }   
+    
 }
-function sleep(milliseconds) {
-    const date = Date.now();
-    let current_date = null;
-    do {
-      current_date = Date.now();
-    } while (current_date - date < milliseconds);
-}
+
 
 var screen = blessed.screen({
     smartCSR: true
@@ -309,7 +317,6 @@ screen.key(['escape', 'q', 'C-c'], function(ch, key) {
     return process.exit(0);
 });
 
-
 button_1.on('press', function() {//fill
     A = new Field(  parseInt(main_field_box.height), 
                     parseInt(main_field_box.width/2), 
@@ -324,6 +331,7 @@ button_2.on('press', function() {//delete
 button_3.on('press', function() {//stop
     clearInterval(id);
     label_2.content = 'status';
+    screen.render();
 });
 button_4.on('press', function() {//step
     A.update_field();
@@ -331,16 +339,11 @@ button_4.on('press', function() {//step
 });
 button_5.on('press',function() {//start
     id = setInterval(() => {
-        loop();
-
+        A.update_field();
+        A.print_arr();
     }, 100);
     label_2.content = 'working...';
 });
-
-function loop(){
-    A.update_field();
-    A.print_arr();
-}
 
 var id;
 
@@ -362,7 +365,6 @@ form_1.append(label_3);
 
     
 var A = new Field(0,0,0);
-var work = false;
 
 
 
